@@ -1,16 +1,10 @@
-import {FastifyRequest, FastifyReply, RouteGenericInterface} from 'fastify';
+import {FastifyRequest, FastifyReply} from 'fastify';
 import {IpAddressRepository} from '../repositories/ip-address-repository';
+import CreateIpRequest from "../requests/ip-address-create-request";
+import UpdateRequest from "../requests/ip-address-request";
+import IpAddressRequest from "../requests/ip-address-get-request";
 
 const ipAddressRepository = new IpAddressRepository();
-
-interface CreateIpRequest extends RouteGenericInterface {
-    Body: {
-        label: string;
-        ip_address: string;
-        comments: string;
-        added_by_user_id: number;
-    };
-}
 
 export class IpAddressController {
 
@@ -29,7 +23,9 @@ export class IpAddressController {
         }
     }
 
-    async getIpAddress(request: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) {
+    async getIpAddress(
+        request: FastifyRequest<IpAddressRequest>,
+        reply: FastifyReply) {
         try {
             const data = await ipAddressRepository.getIpAddressById(request.server, request.params.id);
 
@@ -69,10 +65,7 @@ export class IpAddressController {
     }
 
     async updateIpAddress(
-        request: FastifyRequest<{
-            Params: { id: string };
-            Body: Partial<{ label: string; ip_address: string; comments: string }>;
-        }>,
+        request: FastifyRequest<UpdateRequest>,
         reply: FastifyReply
     ) {
         const {id} = request.params;
@@ -98,7 +91,7 @@ export class IpAddressController {
     }
 
     async deleteIpAddress(
-        request: FastifyRequest<{ Params: { id: string } }>,
+        request: FastifyRequest<IpAddressRequest>,
         reply: FastifyReply
     ) {
         try {

@@ -7,7 +7,7 @@ export default fp(async (fastify: FastifyInstance) => {
     fastify.register(swagger, {
         openapi: {
             info: {
-                title: 'API Docs',
+                title: 'IP Address API Documentation',
                 version: '1.0.0',
             },
             servers: [{ url: 'http://localhost:3000' }],

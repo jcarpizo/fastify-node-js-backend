@@ -1,6 +1,6 @@
 import {FastifyInstance} from 'fastify'
 import fastifyAuth from '@fastify/auth'
-import {verifyApiKey} from '../middleware/api-key-guard'
+import {verifyApiKey} from '../middlewares/api-key-guard'
 
 export default async function authPlugin(app: FastifyInstance) {
     await app.register(fastifyAuth)
